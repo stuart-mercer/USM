@@ -1,0 +1,23 @@
+<template>
+    <header>
+        <img src="resources/collaboration.png" alt="USM Logo" />
+        <h2>Universal Sharing Ministry</h2>
+        <div class="actions">
+            <template if:true={loggedUser}>
+                <span class="user-display-name">{loggedUser.display_name}</span>
+                <br />
+                <a href="/oauth2/logout">
+                    <button type="button" class="brand">Log Out</button>
+                </a>
+            </template>
+        </div>
+    </header>
+    <main class="content">
+        <template if:true={isLoginView}>
+            <my-login-view></my-login-view>
+        </template>
+        <template if:true={isMemberFormView}>
+            <my-member-form></my-member-form>
+        </template>
+    </main>
+</template>
