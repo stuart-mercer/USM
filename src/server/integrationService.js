@@ -151,8 +151,10 @@ module.exports = class IntegrationService {
      * Saves Opportunity records into Salesforce
      * @param {Object} req - server request
      * @param {Object} res - server response
+     * @param {Object} regData - data to be inserted into Salesforce
      */
-    saveRegData(req, res) {
+    saveRegData(req, res, regData) {
+        var body = regData;
         const session = this.authService.getSession(req, res);
         if (session === null) {
             return;
@@ -162,22 +164,13 @@ module.exports = class IntegrationService {
             instanceUrl: session.sfdcInstanceUrl
         });
 
-        // Single record creation
-        conn.sobject('Contact').create(
-            {
-                FirstName: 'Carl',
-                LastName: 'Orff'
-            },
-            function (err, ret) {
-                if (err || !ret.success) {
-                    return console.error(err, ret);
-                }
-                console.log('req.Id->' + req.Id);
-                console.log('req.FirstName->' + req.FirstName);
-                console.log('req.LastName->' + req.LastName);
-                console.log('Created record id->' + ret.id);
-                // ...
+        // body payload structure is depending to the Apex REST method interface.
+        conn.apex.post('/RegisterNewMember/', body, function (err, res) {
+            if (err) {
+                return console.error(err);
             }
-        );
+            console.log('response: ', res);
+            // the response object structure depends on the definition of apex class
+        });
     }
 };
