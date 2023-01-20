@@ -1,46 +1,15 @@
-# Salesforce Integration with LWC OSS using OAuth Web Server Flow
+# Universal Sharing Ministry Exercise
 
-This repo has the sample code for connecting to Salesforce using OAuth Web Server flow from an LWC OSS App.
+This repo has the sample code for connecting to Salesforce using OAuth Web Server flow from an LWC OSS App.  It borrows heavily from the lwc-oss-oauth application created by adityanaag3 - Aditya Naag, for scaffolding and logging into Salesforce.
 
 ## About the app
 
-The basic version of the app is built using the Trailhead Project [Build Your First Application with Lightning Web Components Open Source](https://trailhead.salesforce.com/content/learn/projects/build-your-first-app-with-lightning-web-components-open-source).
+This app is incomplete at this point.  It contains js source necessary to login to Salesforce and an SLDS form for entering data into fields which will ultimately be used to create an Opportunity, Account, and Contact record to register a new member for USM.
 
-The Salesforce Data Model for the app is created using the first 3 units of the Trailhead Project [Access Salesforce Data with Lightning Web Components Open Source](https://trailhead.salesforce.com/content/learn/projects/access-salesforce-data-with-lightning-web-components-open-source/create-a-salesforce-environment).
+I was beginning to build out the Apex class needed to insert the data into Salesforce.  The class in the Salesforce Org provided is:  RegisterNewMember.
 
-## Logout Variations
+I created several List Views in the Org under the Opportunity object.  I added an external Id to the Opportunity, as well.
 
-The logout functionality is implemented in 2 different ways
+The login portion of the code is working, and I created a Connected App in the Org called CCM Exercise to provide REST access.  The MemberForm.html markup file uses SLDS to display the beginnings of the form for new member registration.
 
-1. Logging out of the app, doesnt log you out of your active Salesforce session. The code for this is present in the `master` branch
-1. Logging out of the app also logs you out of your active Salesforce session. The code for this is present in the `single-logout` branch.
-
-## Using the app
-
-1. Create a connected app in your Salesforce Org
-
-    1. Add `http://localhost:3001/oauth2/callback` to the list of Callback URLs.
-    1. Add `api` to the list of Selected OAuth Scopes
-
-1. Note the Consumer Key and Consumer Secret.
-
-1. Clone this repository:
-
-    ```
-    git clone https://github.com/adityanaag3/lwc-oss-oauth
-    cd lwc-oss-oauth
-    ```
-
-1. Create a `.env` file at the root of the project, and add the following code:
-
-    ```
-    SALESFORCE_LOGIN_DOMAIN='https://login.salesforce.com'
-    SALESFORCE_CLIENT_ID='YOUR_SALESFORCE_CONSUMER_KEY'
-    SALESFORCE_CLIENT_SECRET='YOUR_SALESFORCE_CONSUMER_SECRET'
-    SALESFORCE_CALLBACK_URL='http://localhost:3001/oauth2/callback'
-    NODE_SESSION_SECRET_KEY='SOME_RANDOM_SECRET_KEY'
-    ```
-
-1. Run `npm install`. (Refer to package.json for the dependencies that'll be installed)
-
-1. Run `npm run watch`. This will start the project with a local development server.
+In the integrationService.js file, I was beginning to build out the call to the Org to post the data into the Opportunity, Account, and Contact objects.
